@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zenith Automations</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+    <style>
+      /* Aggressive CSS to hide any text in Spline viewer */
+      spline-viewer::part(label),
+      spline-viewer::part(text),
+      spline-viewer::part(instructions),
+      spline-viewer::part(overlay),
+      spline-viewer::part(div),
+      spline-viewer::part(p),
+      spline-viewer::part(span) {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+      }
+      
+      /* Ensure spline viewer covers the entire background */
+      spline-viewer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+      
+      /* Fix for mobile devices to ensure proper sizing */
+      @media (max-width: 767px) {
+        spline-viewer {
+          height: 100vh;
+          width: 100vw;
+          position: fixed;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Script to remove any text from Spline viewer
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to remove text elements
+        function removeSplineText() {
+          const splineViewer = document.querySelector('spline-viewer');
+          if (!splineViewer || !splineViewer.shadowRoot) return;
+          
+          // Target all possible text elements in the shadow DOM
+          const textElements = splineViewer.shadowRoot.querySelectorAll('*');
+          textElements.forEach(el => {
+            if (el.textContent && el.textContent.trim() !== '') {
+              el.style.display = 'none';
+              el.style.visibility = 'hidden';
+              el.style.opacity = '0';
+              el.textContent = '';
+            }
+          });
+        }
+        
+        // Run immediately and set up interval to keep checking
+        removeSplineText();
+        setInterval(removeSplineText, 500);
+        
+        // Ensure proper sizing on mobile devices
+        function adjustSplineViewerSize() {
+          const splineViewer = document.querySelector('spline-viewer');
+          if (!splineViewer) return;
+          
+          if (window.innerWidth < 768) {
+            // For mobile, make it cover the entire viewport
+            splineViewer.style.position = 'fixed';
+            splineViewer.style.top = '0';
+            splineViewer.style.left = '0';
+            splineViewer.style.width = '100vw';
+            splineViewer.style.height = '100vh';
+            splineViewer.style.zIndex = '0';
+          } else {
+            // For desktop, make it cover its container
+            splineViewer.style.position = 'absolute';
+            splineViewer.style.top = '0';
+            splineViewer.style.left = '0';
+            splineViewer.style.width = '100%';
+            splineViewer.style.height = '100%';
+            splineViewer.style.zIndex = '0';
+          }
+        }
+        
+        // Run on load and resize
+        adjustSplineViewerSize();
+        window.addEventListener('resize', adjustSplineViewerSize);
+      });
+    </script>
+  </body>
+</html>

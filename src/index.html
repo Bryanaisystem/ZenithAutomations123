@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zenith Automations - Intelligent Automation Solutions</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+    <style>
+      /* Ensure widget is visible and properly positioned */
+      #VG_OVERLAY_CONTAINER {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 9999 !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      /* Widget styling */
+      [data-vfrc] {
+        z-index: 9999 !important;
+      }
+
+      [data-vfrc-launcher] {
+        z-index: 9999 !important;
+      }
+
+      [data-vfrc-chat] {
+        z-index: 9999 !important;
+        width: 602px !important;
+        height: 679px !important;
+        max-width: 95vw !important;
+        max-height: calc(100vh - 100px) !important;
+      }
+
+      @media (max-width: 767px) {
+        #VG_OVERLAY_CONTAINER {
+          bottom: 80px !important;
+        }
+        [data-vfrc-chat] {
+          width: 95vw !important;
+          height: calc(100vh - 140px) !important;
+          max-height: calc(100vh - 140px) !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <div id="VG_OVERLAY_CONTAINER">
+      <!-- Here is where TIXAE Agents renders the widget. -->
+      <!-- Set render to 'full-width' then adjust the width and height to 500px (for example) to render the chatbot itself without the popup. -->
+    </div>
+    <script>
+      (function() {
+        window.VG_CONFIG = {
+          ID: "c6mrviqlmjs92apf",
+          region: 'na',
+          render: 'bottom-right',
+          stylesheets: [
+            "https://vg-bunny-cdn.b-cdn.net/vg_live_build/styles.css"
+          ]
+        }
+        var VG_SCRIPT = document.createElement("script");
+        VG_SCRIPT.src = "https://vg-bunny-cdn.b-cdn.net/vg_live_build/vg_bundle.js";
+        VG_SCRIPT.defer = true;
+        document.body.appendChild(VG_SCRIPT);
+      })()
+    </script>
+  </body>
+</html>
